@@ -19,12 +19,12 @@
             background-color: #000;
         }
 
-        /* Background Photo */
+        /* Background Photo - Fixed with a placeholder URL */
         .bg-img {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('background.jpg') no-repeat center center;
+            background: url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=2000') no-repeat center center;
             background-size: cover; z-index: -3;
-            filter: brightness(0.6);
+            filter: brightness(0.5);
         }
 
         /* Poetic Background Text Overlay */
@@ -129,13 +129,13 @@
         const questions = [
             "يا ريماس.. تحبيني؟ 🥹",
             "ودّك نكمل مشوارنا سوا ونبني بيتنا؟ 💍",
-            "عارفة إنك أغلى وحدة في الكون كله؟ ❤️",
+            "عارفة إنك أغلى وحدة في دنيتي؟ ❤️",
             "ترضي نكبر ونشيّب مع بعض يا روحي؟ ✨",
-            "تثقي إن قلبي ما يدق لغيرك أبداً؟ 😍",
-            "يا ست البنات.. تكوني الفلانتاين حقي السنة وكل سنة؟ 🌹"
+            "تثقي إن قلبي صار ملكك لوحدك؟ 😍",
+            "يا ست البنات ريماس.. تكوني الفلانتاين حقي؟ 🌹"
         ];
 
-        // Jeddah-style dodge text
+        // Proper Jeddah style "No" responses
         const noTalk = ["بدري عليكي!", "ما تقدري 😂", "حاولي تاني!", "يا واش يا واش!", "مافي فكة!"];
 
         function nextQuestion() {
@@ -178,7 +178,7 @@
         function celebrate() {
             document.querySelector('.glass-card').innerHTML = `
                 <h1 class="animate__animated animate__heartBeat">يا حتة من قلبي! 😍</h1>
-                <p style="font-size: 1.15rem; line-height: 1.8;">والله كنت داري إنك ما تكسري بخاطري..<br>الله لا يحرمني منك ومن ضحكتك يا أحلى ريماس في الدنيا.</p>
+                <p style="font-size: 1.15rem; line-height: 1.8;">والله قلبي كان حاسس إنك ما ترديني..<br>الله لا يحرمني منك ومن ضحكتك يا أحلى ريماس.</p>
                 <div id="finalTimer" style="margin-top:20px; font-weight:bold; background:rgba(255,255,255,0.1); padding:12px; border-radius:15px; font-size:0.9rem;"></div>
                 <div style="font-size: 3.5rem; margin-top: 20px;">💍🌹❤️</div>
             `;
