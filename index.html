@@ -24,7 +24,7 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('background.jpg') no-repeat center center;
             background-size: cover; z-index: -3;
-            filter: brightness(0.7);
+            filter: brightness(0.6);
         }
 
         /* Poetic Background Text Overlay */
@@ -35,14 +35,14 @@
         }
 
         .poetic-text {
-            color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.15);
             font-size: 2.2rem; font-weight: 800; text-align: center;
             line-height: 1.8; letter-spacing: 1px;
         }
 
         .overlay-dim {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.6));
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
             z-index: -1;
         }
 
@@ -109,7 +109,7 @@
     <div class="bg-img"></div>
     <div class="poetic-overlay">
         <div class="poetic-text">
-            أنتي قمري..<br>أنتي روحي..<br>أنتي دنيتي
+            يا بعد حيي..<br>يا نور عيني..<br>يا روح قلبي
         </div>
     </div>
     <div class="overlay-dim"></div>
@@ -118,10 +118,10 @@
         <div class="glass-card animate__animated animate__fadeIn">
             <h1 id="question">يا ريماس.. تحبيني؟ 🥹</h1>
             <div class="btn-area" id="btnContainer">
-                <button class="yes-btn" onclick="nextQuestion()">أيوة أكيد!</button>
+                <button class="yes-btn" onclick="nextQuestion()">أيوة وربي!</button>
                 <button id="noBtn" onmouseover="dodge()" onclick="dodge()">لأ</button>
             </div>
-            <div id="countdown">ثواني يا روح قلبي...</div>
+            <div id="countdown">ثواني يا ست الكل...</div>
         </div>
     </div>
 
@@ -129,14 +129,14 @@
         let step = 0;
         const questions = [
             "يا ريماس.. تحبيني؟ 🥹",
-            "ودّك نكمل سنيننا الجاية سوا؟ 💍",
-            "عارفة إنك أغلى وحدة في دنيتي؟ ❤️",
-            "ترضي نكبر ونبني كل أحلامنا مع بعض؟ ✨",
-            "تثقي إن قلبي صار ملكك لوحدك؟ 😍",
-            "طيب يا ست البنات ريماس.. ترضي تكوني الفلانتاين حقي؟ 🌹"
+            "ودّك نكمل مشوارنا سوا ونبني بيتنا؟ 💍",
+            "عارفة إنك أغلى وحدة في الكون كله؟ ❤️",
+            "ترضي نكبر ونشيّب مع بعض يا روحي؟ ✨",
+            "تثقي إن قلبي ما يدق لغيرك أبداً؟ 😍",
+            "طيب يا ست البنات.. تكوني الفلانتاين حقي السنة وكل سنة؟ 🌹"
         ];
 
-        const noTalk = ["فكري تاني!", "ما تقدري 😂", "حاولي!", "أبداً!", "مافي مفر!"];
+        const noTalk = ["بدري عليكي!", "ما تقدري 😂", "حاولي تاني!", "يا واش يا واش!", "مافي فكة!"];
 
         function nextQuestion() {
             step++;
@@ -177,8 +177,8 @@
 
         function celebrate() {
             document.querySelector('.glass-card').innerHTML = `
-                <h1 class="animate__animated animate__heartBeat">يا روحي أنتي! 😍</h1>
-                <p style="font-size: 1.15rem; line-height: 1.8;">والله قلبي كان حاسس إنك ما ترديني..<br>ربي يخليكي ليا وما يحرمني منك يا ريماس.</p>
+                <h1 class="animate__animated animate__heartBeat">يا حتة من قلبي! 😍</h1>
+                <p style="font-size: 1.15rem; line-height: 1.8;">والله كنت داري إنك ما تكسري بخاطري..<br>الله لا يحرمني منك ومن ضحكتك يا أحلى ريماس في الدنيا.</p>
                 <div id="finalTimer" style="margin-top:20px; font-weight:bold; background:rgba(255,255,255,0.1); padding:12px; border-radius:15px; font-size:0.9rem;"></div>
                 <div style="font-size: 3.5rem; margin-top: 20px;">💍🌹❤️</div>
             `;
