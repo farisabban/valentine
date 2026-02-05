@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>إلى خطيبتي ريماس</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --ios-pink: #ff3b6c;
+            --glass: rgba(255, 255, 255, 0.18);
+            --text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+            overflow: hidden; background: #000;
+        }
+
+        .bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, #ee9ca7 0%, #ffdde1 100%);
+            z-index: -2;
+            animation: gradientBG 8s ease infinite alternate;
+        }
+
+        @keyframes gradientBG {
+            0% { filter: hue-rotate(0deg) brightness(1); }
+            100% { filter: hue-rotate(15deg) brightness(1.1); }
+        }
+
+        .container {
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; padding: 20px; box-sizing: border-box;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 40px;
+            padding: 40px 25px;
+            width: 100%; max-width: 380px;
+            text-align: center; color: white;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        /* عبارة الإهداء الجديدة */
+        .dedication {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        h1 { 
+            font-size: 1.8rem; line-height: 1.4; margin-bottom: 30px; 
+            font-weight: 800; text-shadow: var(--text-shadow);
+        }
+
+        .btn-stack { display: flex; flex-direction: column; gap: 15px; align-items: center; width: 100%; }
+
+        button {
+            width: 90%; padding: 18px; border-radius: 22px; border: none;
+            font-size: 1.2rem; font-weight: 700; cursor: pointer; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 20px rgba(255, 59, 108, 0.2);
+        }
+
+        .yes-btn { background: white; color: var(--ios-pink); }
+        
+        #noBtn { 
+            background: rgba(255, 255, 255, 0.15); color: white; 
+            border: 1px solid rgba(255,255,255,0.4); position: relative; 
+        }
+
+        #timer {
+            font-size: 0.85rem; margin-top: 25px; font-weight: 600;
+            background: rgba(0, 0, 0, 0.1); padding: 12px; border-radius: 20px;
+        }
+
+        .heart-float {
+            position: fixed; bottom: -10%; color: white;
+            font-size: 24px; pointer-events: none;
+            filter: drop-shadow(0 0 5px var(--ios-pink));
+            animation: floatUp 4s linear forwards;
+            z-index: 10;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-120vh) rotate(360deg) scale(1.8); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg"></div>
+
+    <div class="container">
+        <div class="glass-card animate__animated animate__fadeInUp">
+            <span class="dedication animate__animated animate__fadeIn animate__delay-1s">إلى قلبي، خطيبتي ريماس ❤️</span>
+            <h1 id="question">تحبيني؟ 🥹</h1>
+            <div class="btn-stack">
+                <button class="yes-btn" onclick="nextQuestion()">أيوة طبعاً! ❤️</button>
+                <button id="noBtn" onmouseover="moveBtn()" onclick="moveBtn()">لا</button>
+            </div>
+            <div id="timer">جاري حساب الشوق...</div>
+        </div>
+    </div>
+
+    <script>
+        let step = 0;
+        const questions = [
+            "تحبيني؟ 🥹",
+            "ودّك تكمّلي العمر كله معايا؟ 💍",
+            "تفتكري إني أسعد واحد في جدة بوجودك؟ 😍",
+            "عارفة إنك ستّ البنات وأغلى هبة في حياتي؟ ❤️",
+            "تثقي فيّ وفي حبنا للأبد؟ ✨",
+            "ترضي تكوني "الفلانتاين" حقي يا طعمة؟ 🌹"
+        ];
+
+        const noResponses = [
+            "يا ستي اتقلي شوي 😉", "مستحيل تقوليها!", "قلبك ما يطاوعك", 
+            "أدري إنك تحبيني", "بعيد عنك يا قمر!", "مافي مفر يا ست البنات!"
+        ];
+
+        function nextQuestion() {
+            step++;
+            if (step < questions.length) {
+                const qEl = document.getElementById('question');
+                qEl.className = 'animate__animated animate__fadeOutLeft';
+                setTimeout(() => {
+                    qEl.innerText = questions[step];
+                    qEl.className = 'animate__animated animate__fadeInRight';
+                    if(step === questions.length - 1) resetNo();
+                }, 300);
+            } else {
+                showFinal();
+            }
+        }
+
+        function moveBtn() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 100);
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+            btn.innerText = noResponses[Math.floor(Math.random()*noResponses.length)];
+        }
+
+        function resetNo() {
+            const btn = document.getElementById('noBtn');
+            btn.style.position = 'relative'; btn.style.left = '0'; btn.style.top = '0';
+            btn.innerText = "خلاص استسلمت 😂";
+        }
+
+        function showFinal() {
+            document.querySelector('.glass-card').innerHTML = `
+                <h1 class="animate__animated animate__heartBeat">يا طُعمة يا ريماس! 😍</h1>
+                <p style="font-size: 1.2rem; line-height: 1.7;">
+                    والله كنت داري إن قلبك أبيض وماراح تكسفيني.. <br>
+                    <span style="font-weight: 700;">يا حظي فيكي يا "هبّة" قلبي وأحلى وحدة في جدة!</span>
+                </p>
+                <div id="countdown" style="margin-top:25px; font-weight:700; background:rgba(255,255,255,0.2); padding:15px; border-radius:20px;"></div>
+                <div style="font-size: 4rem; margin-top: 20px;">🌹💍❤️</div>
+            `;
+            startCountdown();
+            setInterval(createHeart, 300);
+        }
+
+        function startCountdown() {
+            // تحديد موعد الفلانتاين بتوقيت السعودية (GMT+3)
+            // Feb 14, 2026 00:00:00 AST (GMT+3)
+            const targetDate = new Date("2026-02-14T00:00:00+03:00").getTime();
+
+            const timerInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const diff = targetDate - now;
+                
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                
+                const timerEl = document.getElementById('countdown') || document.getElementById('timer');
+                if (timerEl) {
+                    if (diff > 0) {
+                        timerEl.innerHTML = `باقي على يومنا: ${d} أيام و ${h} ساعات ❤️`;
+                    } else {
+                        timerEl.innerHTML = `اليوم هو يومنا يا ملكة قلبي! 🌹`;
+                        clearInterval(timerInterval);
+                    }
+                }
+            }, 1000);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = ['❤️', '💖', '✨', '🌸', '💍'][Math.floor(Math.random() * 5)];
+            heart.className = 'heart-float';
+            heart.style.left = Math.random() * 100 + 'vw';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+
+        startCountdown();
+    </script>
+</body>
+</html>
