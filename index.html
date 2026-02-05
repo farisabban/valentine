@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>إلى ريماس.. قمري ودنيتي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --ios-pink: #ff2d55;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .bg-img {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('background.jpg') no-repeat center center;
+            background-size: cover; z-index: -3;
+            filter: brightness(0.65);
+        }
+
+        /* Watermarked Arabic Text */
+        .poetic-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: -2; pointer-events: none;
+        }
+
+        .poetic-text {
+            color: rgba(255, 255, 255, 0.12); /* Subtle transparency */
+            font-size: 2rem; font-weight: 800; text-align: center;
+            line-height: 2;
+        }
+
+        .overlay-dim {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+            z-index: -1;
+        }
+
+        .container {
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; padding: 20px;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 40px;
+            padding: 50px 25px;
+            width: 100%; max-width: 350px;
+            text-align: center; color: white;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+        }
+
+        h1 { font-size: 1.55rem; font-weight: 700; line-height: 1.6; margin-bottom: 30px; }
+
+        .btn-area {
+            position: relative; height: 150px; width: 100%;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        button {
+            width: 85%; padding: 17px; border-radius: 22px; border: none;
+            font-size: 1.15rem; font-weight: 700; cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .yes-btn {
+            background-color: white; color: var(--ios-pink);
+            box-shadow: 0 10px 25px rgba(255, 45, 85, 0.2); z-index: 5;
+        }
+
+        #noBtn {
+            background: rgba(255,255,255,0.12); color: white;
+            border: 1px solid rgba(255,255,255,0.4);
+            position: absolute; bottom: 0;
+        }
+
+        #countdown {
+            margin-top: 30px; font-size: 0.85rem; opacity: 0.8;
+            background: rgba(0,0,0,0.25); padding: 12px; border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .heart-particle {
+            position: fixed; bottom: -10%; color: var(--ios-pink);
+            font-size: 22px; pointer-events: none;
+            animation: floatUp 4s linear forwards;
+        }
+
+        @keyframes floatUp {
+            to { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-img"></div>
+    <div class="poetic-overlay">
+        <div class="poetic-text">
+            أنتي قمري..<br>أنتي روحي..<br>أنتي دنيتي
+        </div>
+    </div>
+    <div class="overlay-dim"></div>
+
+    <div class="container">
+        <div class="glass-card animate__animated animate__fadeInUp">
+            <h1 id="question">يا ريماس.. تحبيني؟ 🥹</h1>
+            <div class="btn-area" id="btnContainer">
+                <button class="yes-btn" onclick="nextQuestion()">أيوة أكيد!</button>
+                <button id="noBtn" onmouseover="dodge()" onclick="dodge()">لأ</button>
+            </div>
+            <div id="countdown">ثواني يا روح قلبي...</div>
+        </div>
+    </div>
+
+    <script>
+        let step = 0;
+        const questions = [
+            "يا ريماس.. تحبيني؟ 🥹",
+            "ودّك نكمل سنيننا الجاية سوا؟ 💍",
+            "عارفة إنك أغلى وحدة في دنيتي؟ ❤️",
+            "ترضي نكبر ونبني كل أحلامنا مع بعض؟ ✨",
+            "تثقي إن قلبي صار ملكك لوحدك؟ 😍",
+            "طيب يا ست البنات ريماس.. ترضي تكوني الفلانتاين حقي؟ 🌹"
+        ];
+
+        const noTalk = ["فكري تاني!", "ما تقدري 😂", "حاولي!", "أبداً!", "مافي مفر!"];
+
+        function nextQuestion() {
+            step++;
+            if (step < questions.length) {
+                const q = document.getElementById('question');
+                q.className = 'animate__animated animate__fadeOut';
+                
+                setTimeout(() => {
+                    q.innerText = questions[step];
+                    q.className = 'animate__animated animate__fadeIn';
+                    
+                    if (step === questions.length - 1) {
+                        document.getElementById('noBtn').style.opacity = '0';
+                        document.getElementById('noBtn').style.pointerEvents = 'none';
+                    }
+                }, 300);
+            } else {
+                celebrate();
+            }
+        }
+
+        function dodge() {
+            const btn = document.getElementById('noBtn');
+            const area = document.getElementById('btnContainer');
+            const maxX = area.clientWidth - btn.clientWidth;
+            const maxY = area.clientHeight - btn.clientHeight;
+            btn.style.left = Math.floor(Math.random() * maxX) + 'px';
+            btn.style.top = Math.floor(Math.random() * maxY) + 'px';
+            btn.innerText = noTalk[Math.floor(Math.random() * noTalk.length)];
+        }
+
+        function celebrate() {
+            document.querySelector('.glass-card').innerHTML = `
+                <h1 class="animate__animated animate__heartBeat">يا روحي أنتي! 😍</h1>
+                <p style="font-size: 1.15rem; line-height: 1.8;">والله قلبي كان حاسس إنك ما ترديني..<br>ربي يخليكي ليا وما يحرمني منك يا ريماس.</p>
+                <div id="finalTimer" style="margin-top:20px; font-weight:bold; background:rgba(255,255,255,0.1); padding:15px; border-radius:15px; font-size:0.9rem; border: 1px solid rgba(255,255,255,0.1);"></div>
+                <div style="font-size: 3.5rem; margin-top: 20px;">💍🌹❤️</div>
+            `;
+            startTimer('finalTimer');
+            setInterval(createHeart, 300);
+        }
+
+        function startTimer(targetId) {
+            // Valentine's Day GMT+3 (KSA Time)
+            const vDay = new Date("2026-02-14T00:00:00+03:00").getTime();
+            
+            setInterval(() => {
+                const now = new Date().getTime();
+                const diff = vDay - now;
+                
+                if (diff <= 0) {
+                    document.getElementById(targetId).innerHTML = "كل سنة وأنتي الفلانتاين حقي! ❤️";
+                    return;
+                }
+
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                
+                const el = document.getElementById(targetId) || document.getElementById('countdown');
+                if (el) {
+                    el.innerHTML = `باقي على يومنا <br> ${d} أيام و ${h} ساعات و ${m} دقائق ❤️`;
+                }
+            }, 1000);
+        }
+
+        function createHeart() {
+            const h = document.createElement('div');
+            h.innerHTML = '❤️';
+            h.className = 'heart-particle';
+            h.style.left = Math.random() * 100 + 'vw';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 4000);
+        }
+
+        startTimer('countdown');
+    </script>
+</body>
+</html>
