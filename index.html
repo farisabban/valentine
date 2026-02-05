@@ -7,107 +7,87 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
         :root {
-            --ios-pink: #ff3b6c;
-            --glass: rgba(255, 255, 255, 0.15);
-            --text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            --ios-pink: #ff2d55;
+            --glass: rgba(255, 255, 255, 0.2);
         }
 
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
-            overflow: hidden; background: #000;
+            overflow: hidden;
+            background-color: #000;
         }
 
-        /* High-quality background placeholder */
         .bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('background.jpg') no-repeat center center;
             background-size: cover; z-index: -2;
-            animation: gradientBG 10s ease infinite;
-        }
-
-        @keyframes gradientBG {
-            0% { filter: hue-rotate(0deg); }
-            50% { filter: hue-rotate(20deg); }
-            100% { filter: hue-rotate(0deg); }
-        }
-
-        .overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.1); z-index: -1;
+            transform: scale(1.1);
         }
 
         .container {
             display: flex; justify-content: center; align-items: center;
-            height: 100vh; padding: 20px; box-sizing: border-box;
+            height: 100vh; padding: 20px;
         }
 
         .glass-card {
             background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 35px;
-            padding: 40px 30px;
-            width: 100%; max-width: 380px;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 40px;
+            padding: 40px 25px;
+            width: 100%; max-width: 360px;
             text-align: center; color: white;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        h1 { 
-            font-size: 1.8rem; line-height: 1.5; margin-bottom: 30px; 
-            font-weight: 800; text-shadow: var(--text-shadow);
-        }
+        h1 { font-size: 1.7rem; line-height: 1.4; margin-bottom: 25px; font-weight: 800; }
+        p { font-size: 1.1rem; line-height: 1.6; }
 
-        .btn-stack { display: flex; flex-direction: column; gap: 12px; align-items: center; width: 100%; }
+        .btn-stack { display: flex; flex-direction: column; gap: 15px; align-items: center; }
 
         button {
-            width: 90%; padding: 16px; border-radius: 18px; border: none;
-            font-size: 1.1rem; font-weight: 700; cursor: pointer; 
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 85%; padding: 18px; border-radius: 20px; border: none;
+            font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: 0.3s;
         }
 
-        .yes-btn { background: white; color: var(--ios-pink); }
-        .yes-btn:active { transform: scale(0.95); }
+        .yes-btn { background: white; color: var(--ios-pink); box-shadow: 0 4px 15px rgba(255,45,85,0.3); }
         
         #noBtn { 
-            background: rgba(255, 255, 255, 0.1); color: white; 
-            border: 1px solid rgba(255,255,255,0.4); position: relative; 
+            background: rgba(0,0,0,0.3); color: white; 
+            border: 1px solid white; position: relative; 
         }
 
-        #timer {
-            font-size: 0.85rem; margin-top: 25px; font-weight: 400;
-            background: rgba(255, 255, 255, 0.1); padding: 12px; border-radius: 20px;
-            letter-spacing: 0.5px;
+        #timer, #countdown {
+            font-size: 0.9rem; margin-top: 20px; font-weight: 300;
+            background: rgba(0,0,0,0.2); padding: 12px; border-radius: 15px;
         }
 
         .heart-float {
-            position: fixed; bottom: -10%; color: white;
+            position: fixed; bottom: -10%; color: var(--ios-pink);
             font-size: 24px; pointer-events: none;
-            filter: drop-shadow(0 0 5px var(--ios-pink));
             animation: floatUp 4s linear forwards;
+            z-index: 10;
         }
 
         @keyframes floatUp {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-120vh) rotate(360deg) scale(1.5); opacity: 0; }
+            to { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
     <div class="bg"></div>
-    <div class="overlay"></div>
 
     <div class="container">
-        <div class="glass-card animate__animated animate__zoomIn">
+        <div class="glass-card animate__animated animate__fadeIn">
             <h1 id="question">يا ريماس، تحبيني؟ 🥹</h1>
             <div class="btn-stack">
-                <button class="yes-btn" onclick="nextQuestion()">أكيد يا روح قلبي!</button>
-                <button id="noBtn" onmouseover="moveBtn()" onclick="moveBtn()">ما أظن</button>
+                <button class="yes-btn" onclick="nextQuestion()">أيوة طبعاً!</button>
+                <button id="noBtn" onmouseover="moveBtn()" onclick="moveBtn()">لأ</button>
             </div>
-            <div id="timer">جاري حساب الشوق لقلبك...</div>
+            <div id="timer">جاري حساب الشوق...</div>
         </div>
     </div>
 
@@ -115,29 +95,24 @@
         let step = 0;
         const questions = [
             "يا ريماس، تحبيني؟ 🥹",
-            "ودّك تكمّلي المشوار معايا؟ 💍",
-            "تفتكري إني أسعد واحد في جدة بوجودك؟ 😍",
-            "عارفة إنك ستّ البنات وأغلى شي عندي؟ ❤️",
-            "تثقي فيّ وفي حبنا "قد الدنيا"؟ ✨",
-            "ترضي تكوني "الفلانتاين" حقي يا طعمة؟ 🌹"
+            "ودّك نفضل مع بعض طول العمر يا ست الكل؟ 💍",
+            "تفتكري إني أسعد إنسان في الدنيا بوجودك؟ 😍",
+            "عارفة إنك أغلى شي في حياتي.. يا بعدي؟ ❤️",
+            "تثقي فيّ وفي حبنا للأبد.. يا هووه؟ ✨",
+            "مستعدة نكمّل المشوار سوا بكل ما فينا؟ 🌊",
+            "طيّب يا روح قلبي ريماس.. ترضي تكوني الفلانتاين حقي؟ 🌹"
         ];
 
-        // More playful Hejazi "No" responses
-        const noResponses = ["يا واد اهجد!", "أبداً ما تقدري", "حاول مرة ثانية", "انسى يا بطل", "مافي مفر!", "بعيد عن خشمك"];
+        const noResponses = ["يا واد اهجد!", "ما تقدري!", "إيش فيه؟", "أبداً!", "فكرتي؟", "يا هووه استهدي بالله"];
 
         function nextQuestion() {
             step++;
             if (step < questions.length) {
-                const qEl = document.getElementById('question');
-                qEl.className = 'animate__animated animate__fadeOut';
-                
+                document.getElementById('question').className = 'animate__animated animate__fadeOutRight';
                 setTimeout(() => {
-                    qEl.innerText = questions[step];
-                    qEl.className = 'animate__animated animate__fadeInUp';
-                    
-                    if(step === questions.length - 1) {
-                        resetNo();
-                    }
+                    document.getElementById('question').innerText = questions[step];
+                    document.getElementById('question').className = 'animate__animated animate__fadeInLeft';
+                    if(step === questions.length - 1) resetNo();
                 }, 300);
             } else {
                 showFinal();
@@ -146,63 +121,68 @@
 
         function moveBtn() {
             const btn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - 120);
-            const y = Math.random() * (window.innerHeight - 80);
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 100);
             btn.style.position = 'fixed';
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
-            btn.style.zIndex = "1000";
             btn.innerText = noResponses[Math.floor(Math.random()*noResponses.length)];
         }
 
         function resetNo() {
             const btn = document.getElementById('noBtn');
             btn.style.position = 'relative'; btn.style.left = '0'; btn.style.top = '0';
-            btn.innerText = "خلاص استسلمت 😂";
+            btn.innerText = "مافي مفر يا عسل 😂";
         }
 
         function showFinal() {
             document.querySelector('.glass-card').innerHTML = `
                 <h1 class="animate__animated animate__heartBeat">يا لبييييه يا ريماس! 😍</h1>
-                <p style="font-size: 1.2rem; line-height: 1.6; font-weight: 300;">
-                    والله كنت داري إن قلبك طيب وماراح تكسفيني.. <br>
-                    <span style="font-weight: 700; color: #fff;">يا حظي فيكي يا مضاوي جدة كلها!</span>
+                <p>
+                    وربي كنت داري إنك ما تكسفيني.. <br> 
+                    الله يخليكي ليا يا <b>أطعم وأحلى</b> وحدة في جدة كلها. <br>
+                    يا ست الكل، مكانك في القلب والعين!
                 </p>
-                <div id="countdown" style="margin-top:20px; font-weight:700; color:white; font-size:1.1rem; background:rgba(0,0,0,0.2); padding:15px; border-radius:15px;"></div>
-                <div style="font-size: 3.5rem; margin-top: 20px;">🌹💍❤️</div>
+                <div id="countdown"></div>
+                <div style="font-size: 3rem; margin-top: 15px;">💍🌹❤️</div>
             `;
             startCountdown();
-            setInterval(createHeart, 300);
+            setInterval(createHeart, 400);
         }
 
         function startCountdown() {
-            const targetDate = new Date("Feb 14, 2026 00:00:00").getTime();
+            // Target: Feb 14, 2026, 00:00:00 KSA Time (GMT+3)
+            const vDay = new Date("2026-02-14T00:00:00+03:00").getTime();
+
             const timerInterval = setInterval(() => {
                 const now = new Date().getTime();
-                const diff = targetDate - now;
-                
+                const diff = vDay - now;
+
                 const d = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const s = Math.floor((diff % (1000 * 60)) / 1000);
                 
                 const timerEl = document.getElementById('countdown') || document.getElementById('timer');
+                
                 if (timerEl) {
-                    timerEl.innerHTML = `باقي على يومنا: ${d} أيام و ${h} ساعة ❤️`;
+                    if (diff <= 0) {
+                        timerEl.innerHTML = "اليوم يومنا يا ست الكل! ❤️🌹";
+                        clearInterval(timerInterval);
+                    } else {
+                        timerEl.innerHTML = `باقي على يومنا ${d} أيام و ${h} ساعة و ${m} دقيقة ❤️`;
+                    }
                 }
-
-                if (diff < 0) clearInterval(timerInterval);
             }, 1000);
         }
 
         function createHeart() {
-            const heart = document.createElement('div');
-            heart.innerHTML = ['❤️', '💖', '✨', '🌸'][Math.floor(Math.random() * 4)];
-            heart.className = 'heart-float';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 4000);
+            const h = document.createElement('div');
+            h.innerHTML = '❤️';
+            h.className = 'heart-float';
+            h.style.left = Math.random() * 100 + 'vw';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 4000);
         }
 
         startCountdown();
